@@ -1,0 +1,4 @@
+name: Playing_Card
+version: '${project.version}'
+main: net.tv.twitch.chrono_fish.playing_card.Main
+api-version: '1.20'
