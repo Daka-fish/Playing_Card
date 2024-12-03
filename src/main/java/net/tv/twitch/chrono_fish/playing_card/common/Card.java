@@ -1,4 +1,4 @@
-package net.tv.twitch.chrono_fish.playing_card;
+package net.tv.twitch.chrono_fish.playing_card.common;
 
 public class Card {
 
