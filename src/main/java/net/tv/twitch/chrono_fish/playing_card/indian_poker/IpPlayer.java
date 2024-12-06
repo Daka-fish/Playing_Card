@@ -34,12 +34,16 @@ public class IpPlayer {
 
     public Card draw(){
         if(hasDraw){
-            player.sendMessage("§c既にドローしているため、ドローできません");
+            if(player != null) player.sendMessage("§c既にドローしているため、ドローできません");
             return null;
         }
         hasDraw = true;
         Card topCard = indianPoker.getDeck().draw();
-        player.sendMessage("§e"+topCard.toString()+"§fをドローしました");
+        if(player != null) player.sendMessage("§e"+topCard.toString()+"§fをドローしました");
         return topCard;
+    }
+
+    public void sendMessage(String message){
+        if(player != null) player.sendMessage(message);
     }
 }

@@ -1,9 +1,7 @@
 package net.tv.twitch.chrono_fish.playing_card.common;
 
 import net.tv.twitch.chrono_fish.playing_card.Main;
-import net.tv.twitch.chrono_fish.playing_card.indian_poker.IndianPoker;
 import net.tv.twitch.chrono_fish.playing_card.indian_poker.IpCommands;
-import net.tv.twitch.chrono_fish.playing_card.indian_poker.IpPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

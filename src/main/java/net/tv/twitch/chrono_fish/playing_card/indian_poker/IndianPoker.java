@@ -33,11 +33,7 @@ public class IndianPoker {
 
     public HashMap<IpPlayer, Card> getCardHashMap() {return cardHashMap;}
 
-    public void sendMessage(String message){
-        participants.forEach(ipPlayer -> {
-            if (ipPlayer.getPlayer() != null) ipPlayer.getPlayer().sendMessage(message);
-        });
-    }
+    public void sendMessage(String message){participants.forEach(ipPlayer -> ipPlayer.sendMessage(message));}
 
     public void addPlayer(IpPlayer ipPlayer){
         participants.add(ipPlayer);
@@ -64,9 +60,21 @@ public class IndianPoker {
 
         Collections.shuffle(participants);
         isRunning = true;
-        for(IpPlayer player : participants){
-            cardHashMap.put(player,deck.draw());
-            //自分以外のカード情報の表示
+        for (IpPlayer player : participants) {
+            cardHashMap.put(player, deck.draw());
+        }
+
+        // 参加者ごとに自分以外のカードを表示
+        for (IpPlayer viewer : participants) {
+            StringBuilder message = new StringBuilder("他のプレイヤーのカード情報:\n");
+            for (IpPlayer target : participants) {
+                if (viewer.equals(target)) {
+                    message.append(target.getName()).append(": ******\n");
+                }else{
+                    message.append(target.getName()).append(": ").append(cardHashMap.get(target).getNumber()).append("\n");
+                }
+            }
+            viewer.sendMessage(message.toString());
         }
     }
 
@@ -74,7 +82,6 @@ public class IndianPoker {
         if(!isRunning){
             return;
         }
-
         IpPlayer winner = participants.get(0);
         IpPlayer loser = participants.get(0);
         for(IpPlayer ipPlayer : participants){
@@ -89,7 +96,6 @@ public class IndianPoker {
             String role = (ipPlayer == winner) ? "[勝者]" : (ipPlayer == loser) ? "[敗者]" : "";
             sendMessage(ipPlayer.getName() + " : " + cardHashMap.get(ipPlayer).getNumber() + " " + role);
         }
-
         isRunning = false;
     }
 }
