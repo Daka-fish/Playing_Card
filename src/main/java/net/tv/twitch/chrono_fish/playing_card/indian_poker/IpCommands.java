@@ -18,10 +18,14 @@ public class IpCommands {
     public void run(){
         switch (args[0]){
             case "make":
-                IndianPoker indianPoker = new IndianPoker();
-                indianPoker.addPlayer(new IpPlayer(indianPoker,sender));
-                main.addGame(sender,indianPoker);
-                sender.sendMessage("§eゲームを作成しました");
+                if(!main.getGames().containsKey(sender)){
+                    IndianPoker indianPoker = new IndianPoker();
+                    indianPoker.addPlayer(new IpPlayer(indianPoker,sender));
+                    main.addGame(sender,indianPoker);
+                }else{
+                    sender.sendMessage("§c既にゲームを作成しました");
+                }
+
                 break;
 
             case "start":
@@ -59,6 +63,14 @@ public class IpCommands {
             case "remove":
                 if(main.getGames().containsKey(sender)){
                     main.removeGame(sender);
+                }else{
+                    sender.sendMessage("§cあなたが作成したゲームがありません");
+                }
+                break;
+
+            case "finish":
+                if(main.getGames().containsKey(sender)){
+                    main.getGames().get(sender).finish();
                 }else{
                     sender.sendMessage("§cあなたが作成したゲームがありません");
                 }

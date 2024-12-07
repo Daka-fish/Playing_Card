@@ -37,7 +37,7 @@ public class IndianPoker {
 
     public void addPlayer(IpPlayer ipPlayer){
         participants.add(ipPlayer);
-        sendMessage("§a"+ipPlayer.getName()+"§eがゲームに参加しました");
+        sendMessage("§a"+ipPlayer.getName()+"§eがインディアンポーカーに参加しました");
     }
 
     public void addCpu(int number){
@@ -65,25 +65,16 @@ public class IndianPoker {
         }
 
         // 参加者ごとに自分以外のカードを表示
-        for (IpPlayer viewer : participants) {
-            StringBuilder message = new StringBuilder("他のプレイヤーのカード情報:\n");
-            for (IpPlayer target : participants) {
-                if (viewer.equals(target)) {
-                    message.append(target.getName()).append(": ******\n");
-                }else{
-                    message.append(target.getName()).append(": ").append(cardHashMap.get(target).getNumber()).append("\n");
-                }
-            }
-            viewer.sendMessage(message.toString());
-        }
+
+
     }
 
     public void finish(){
         if(!isRunning){
             return;
         }
-        IpPlayer winner = participants.get(0);
-        IpPlayer loser = participants.get(0);
+        IpPlayer winner ;
+        IpPlayer loser ;
         for(IpPlayer ipPlayer : participants){
             if(cardHashMap.containsKey(ipPlayer)){
                 if(cardHashMap.get(ipPlayer).getNumber() > cardHashMap.get(winner).getNumber()){
