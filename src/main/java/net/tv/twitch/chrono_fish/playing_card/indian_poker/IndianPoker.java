@@ -63,30 +63,38 @@ public class IndianPoker {
         for (IpPlayer player : participants) {
             cardHashMap.put(player, deck.draw());
         }
-
         // 参加者ごとに自分以外のカードを表示
 
-
     }
 
-    public void finish(){
-        if(!isRunning){
+    public void finish() {
+        if (!isRunning) {
+            sendMessage("§cゲームは進行していません。");
             return;
         }
-        IpPlayer winner ;
-        IpPlayer loser ;
-        for(IpPlayer ipPlayer : participants){
-            if(cardHashMap.containsKey(ipPlayer)){
-                if(cardHashMap.get(ipPlayer).getNumber() > cardHashMap.get(winner).getNumber()){
-                    winner = ipPlayer;
-                }
-                if(cardHashMap.get(ipPlayer).getNumber() < cardHashMap.get(loser).getNumber()){
-                    loser = ipPlayer;
+
+        // ゲーム終了メッセージ
+        sendMessage("§eインディアンポーカーが終了しました。");
+
+        // 勝者を決定し表示
+        IpPlayer winner = participants.get(0);
+        for (IpPlayer player : participants) {
+            if (cardHashMap.containsKey(player)) {
+                Card currentCard = cardHashMap.get(player);
+                if (cardHashMap.get(winner).getNumber() < currentCard.getNumber()) {
+                    winner = player;
                 }
             }
-            String role = (ipPlayer == winner) ? "[勝者]" : (ipPlayer == loser) ? "[敗者]" : "";
-            sendMessage(ipPlayer.getName() + " : " + cardHashMap.get(ipPlayer).getNumber() + " " + role);
         }
+        sendMessage("§a勝者: §b" + winner.getName());
+
+        // ゲーム状態リセット
         isRunning = false;
+        cardHashMap.clear();
+
+        // デッキの再初期化
+        deck = new Deck();
+        deck.shuffle();
     }
+
 }
